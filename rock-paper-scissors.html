@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        body{
+            background-color: #18353a;
+            color: white;
+            max-width: 100vw;
+            max-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', 'Poppins', Courier, monospace;
+        }
+
+        body > div{
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+
+        button{
+            border: none;
+            background-color: rgba(185, 185, 185, 0.572);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        button:focus,
+        button:focus-visible{
+            outline: 1px solid rgba(248, 248, 252, 0.833);
+        }
+
+        button:hover{
+            transform: translateY(3px);
+        }
+
+        h3{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        table{
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Rock Paper Scissors Game</h1>
+        <h3>
+            <span id="ai-name"></span>
+            <span id="ai-result"></span>
+        </h3>
+        <h3>
+            <span id="my-name">You :</span>
+            <span id="my-result"></span>
+        </h3>
+        <h3>
+            <button data-id="Rock" id="my-game">🌝</button>
+            <button data-id="Paper" id="my-game">📃</button>
+            <button data-id="Scissors" id="my-game">✂</button>
+        </h3>
+        <table border="2px dotted white">
+            <tr>
+                <th class="ai-score-name"></th>
+                <th class="my-score-name">You</th>
+            </tr>
+            <tr>
+                <td class="ai-score">0</td>
+                <td class="my-score">0</td>
+            </tr>
+        </table>
+        <h2 class="draw"></h2>
+    </div>
+    <script>
+        const gameArr = [
+            "Scissors",
+            "Rock",
+            "Paper",
+            "Scissors",
+            "Rock",
+            "Paper",
+            "Scissors",
+            "Rock",
+            "Scissors",
+            "Rock",
+            "Paper",
+            "Scissors",
+            "Rock",
+            "Paper",
+            "Scissors",
+            "Paper"
+        ];
+        const aiNameArr = [
+            "John :",
+            "Esther :",
+            "Sophia :",
+            "Charles :",
+            "Spider-Man :",
+            "Abigail :",
+            "Akachi :",
+            "Junior :",
+            "Mercy :",
+            'Favour :',
+            'Brian :',
+            "Kelvin :",
+            "Batman :",
+            "Dylan :",
+            "Andre :"
+        ]
+        const aiName = document.getElementById("ai-name");
+        const aiResult = document.getElementById("ai-result");
+        const myName = document.getElementById("my-name");
+        const myResult = document.getElementById("my-result");
+        const myGame = document.querySelectorAll("#my-game");
+        const aiScoreName = document.querySelector(".ai-score-name")
+        let myScore = document.querySelector(".my-score")
+        let aiScore = document.querySelector(".ai-score")
+        const draw= document.querySelector(".draw")
+        let aiScoreNo = 0
+        let myScoreNo = 0
+        window.addEventListener("DOMContentLoaded", () =>{
+            autoName()
+        })
+
+        myGame.forEach((game) =>{
+            game.addEventListener("click", (e) => {
+                const clicked = e.currentTarget.dataset.id
+                console.log(clicked)
+                aiResult.textContent = gameArr[randomAi(gameArr)]
+                myResult.textContent = clicked
+                draw.textContent = " "
+                score()
+            if(clicked === aiResult.innerText){
+                draw.textContent = "draw"
+            }else if(clicked === "Paper" && aiResult.textContent === "Rock"){
+                myScoreNo += 1;
+            }else if(clicked === "Scissors" && aiResult.innerText === "Paper"){
+                myScoreNo += 1;
+            }else if(clicked === "Rock" && aiResult.textContent === "Scissors"){
+                myScoreNo += 1;
+            }else{
+                aiScoreNo += 1
+            }
+
+            aiScore.textContent = aiScoreNo;
+            myScore.textContent = myScoreNo;   
+            })
+        })
+
+
+        function score(){
+            
+        }
+
+        function autoName(){
+            let auto = randomAi(aiNameArr)
+            aiName.textContent = aiNameArr[auto]
+            aiScoreName.textContent = aiNameArr[auto]
+        }
+        function randomAi(n){
+            return Math.floor(Math.random() * n.length)
+        }
+    </script>
+</body>
+</html>
